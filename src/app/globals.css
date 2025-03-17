@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --scroll-shadow-right: 1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,7 +14,6 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
 }
 
 body {

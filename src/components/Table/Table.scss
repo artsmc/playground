@@ -1,0 +1,181 @@
+.table-container {
+  width: 100%;
+  height: calc(100vh - 280px); // Adjust as needed
+  position: relative;
+  overflow: auto;
+  /* Essential for scrolling */
+}
+
+.table-wrap {
+  height: calc(100% - 60px); // Adjust based on your layout
+}
+
+.table-shadow-wrapper {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 90px; // Keep this width
+    pointer-events: none; // Add this to prevent interference with scrolling
+    transition: opacity 0.2s ease;
+    right: 0;
+    z-index: 99;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.1) 0%, transparent 100%);
+    opacity: 0;
+    /* Initially hidden */
+  }
+
+  &:hover {
+    &::after {
+      opacity: var(--scroll-shadow-right, 1);
+    }
+  }
+
+  &.scrolled-right::after {
+    opacity: 0;
+    /* Hide when scrolled all the way right */
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 14px;
+  table-layout: fixed; // Crucial for sticky header with virtualization
+
+  thead {
+
+    // No position: relative on thead itself
+    th {
+      height: 100px !important;
+      background-color: #f5f5f5;
+    }
+  }
+
+  tbody {
+    position: relative; // Important for absolute positioning of rows
+    z-index: 1;
+  }
+
+  td {
+    height: 150px;
+    word-wrap: break-word;
+    overflow: hidden;
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .table-cell {
+    box-sizing: border-box; //keep
+    padding: 12px 16px;
+  }
+}
+
+.table-header {
+  background-color: #f5f5f5; // Consistent background
+  color: #333;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table-header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    min-width: 90%; // Keep this if needed
+  }
+
+  & button {
+    padding: 4px;
+    all: unset; // Reset button styles
+    cursor: pointer;
+    color: rgb(107, 122, 122);
+    transition: all 0.3s ease;
+  }
+
+  & button:hover {
+    color: rgb(41, 59, 71);
+  }
+}
+
+.table-row {
+  border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: #f9f9f9;
+}
+
+.selected-row {
+  background-color: #e8f4fd;
+}
+
+.selected-row:hover {
+  background-color: #d8eaf8;
+}
+
+.table-cell {
+  text-align: left;
+}
+
+.select-column {
+  width: 40px;
+  text-align: center;
+  padding: 12px 8px;
+}
+
+/* Loading animation styles */
+.table-cell-loading {
+  position: relative;
+  min-height: 24px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.05);
+  border-top-color: #3498db;
+  animation: spin 0.7s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.table-cell-content {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.table-cell-content.loaded {
+  opacity: 1;
+}
