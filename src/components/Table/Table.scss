@@ -45,32 +45,32 @@
   border-collapse: collapse;
   border-spacing: 0;
   font-size: 14px;
-  table-layout: fixed; // Crucial for sticky header with virtualization
-
-  thead {
-
-    // No position: relative on thead itself
-    th {
-      height: 100px !important;
-      background-color: #f5f5f5;
-    }
-  }
+  table-layout: fixed;
 
   tbody {
-    position: relative; // Important for absolute positioning of rows
-    z-index: 1;
+    position: relative; // Important for absolute positioning of ALL rows
+    // Removed margin-top
   }
 
   td {
     height: 150px;
     word-wrap: break-word;
     overflow: hidden;
+    max-width: 342px;
     border-right: 1px solid #e0e0e0;
   }
 
   .table-cell {
     box-sizing: border-box; //keep
     padding: 12px 16px;
+  }
+}
+
+.table-header-row {
+
+  // No special styles needed here - handled by .table-header
+  .table-header {
+    height: 100px !important;
   }
 }
 
@@ -81,6 +81,7 @@
   text-align: left;
   padding: 12px 16px;
   border-bottom: 1px solid #e0e0e0;
+  height: 100px;
 }
 
 .table-header-content {
@@ -89,7 +90,7 @@
   gap: 8px;
 
   span {
-    min-width: 90%; // Keep this if needed
+    min-width: 90%;
   }
 
   & button {
@@ -132,7 +133,6 @@
   padding: 12px 8px;
 }
 
-/* Loading animation styles */
 .table-cell-loading {
   position: relative;
   min-height: 24px;
